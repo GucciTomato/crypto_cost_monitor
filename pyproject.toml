@@ -1,0 +1,14 @@
+[project]
+name = "crypto_cost_monitor_project"
+version = "0.0.1"
+dependencies = [
+    "requests",
+    "pandas",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]

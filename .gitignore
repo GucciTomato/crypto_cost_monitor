@@ -1,0 +1,7 @@
+project_summary.md
+.env
+.venv/
+venv/
+crypto_cost_monitor_project.egg-info
+__pycache__/
+*.pyc
