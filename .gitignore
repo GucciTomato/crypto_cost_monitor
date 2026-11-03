@@ -13,8 +13,12 @@ __pycache__/
 *.pyc
 
 # terraform
-*.tfstate
+*.tfstate*
 .terraform
 
 # raw data
 data/*
+
+# build
+build/*
+lambda.zip
