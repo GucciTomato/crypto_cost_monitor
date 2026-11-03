@@ -1,7 +1,24 @@
 project_summary.md
+crypto_cost_monitor_project.egg-info
+
+# project environment variables
 .env
+
+# virtual environment
 .venv/
 venv/
-crypto_cost_monitor_project.egg-info
+
+# pycache
 __pycache__/
 *.pyc
+
+# terraform
+*.tfstate*
+.terraform
+
+# raw data
+data/*
+
+# build
+build/*
+lambda.zip
