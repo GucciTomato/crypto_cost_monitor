@@ -1,0 +1,22 @@
+
+version: 2
+
+version: 2
+
+models:
+  - name: stg_kraken__order_book_levels
+    columns:
+      - name: run_id
+        data_tests:
+          - not_null
+      - name: side
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['bid', 'ask']
+      - name: price
+        data_tests:
+          - not_null
+      - name: quantity
+        data_tests:
+          - not_null

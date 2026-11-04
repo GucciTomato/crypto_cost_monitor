@@ -104,3 +104,43 @@ resource "aws_lambda_permission" "events" {
   principal = "events.amazonaws.com"
   source_arn = aws_cloudwatch_event_rule.schedule.arn
 }
+
+variable "snowflake_iam_user_arn" {
+  type = string
+}
+
+variable "snowflake_external_id" {
+  type = string
+}
+
+resource "aws_iam_role" "snowflake" {
+  name = "${local.name}-snowflake"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { AWS = var.snowflake_iam_user_arn }
+      Action    = "sts:AssumeRole"
+      Condition = { StringEquals = { "sts:ExternalId" = var.snowflake_external_id } }
+    }]
+  })
+}
+
+resource "aws_iam_role_policy" "snowflake" {
+  role = aws_iam_role.snowflake.id
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = "s3:GetObject"
+        Resource = "${aws_s3_bucket.raw.arn}/*"
+      },
+      {
+        Effect   = "Allow"
+        Action   = "s3:ListBucket"
+        Resource = aws_s3_bucket.raw.arn
+      }
+    ]
+  })
+}

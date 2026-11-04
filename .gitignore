@@ -22,3 +22,9 @@ data/*
 # build
 build/*
 lambda.zip
+
+# dbt
+target/
+dbt_packages/
+logs/
+.env
