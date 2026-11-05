@@ -1,10 +1,24 @@
 
 version: 2
 
-version: 2
-
 models:
   - name: stg_kraken__order_book_levels
+    columns:
+      - name: run_id
+        data_tests:
+          - not_null
+      - name: side
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['bids', 'asks']
+      - name: price
+        data_tests:
+          - not_null
+      - name: quantity
+        data_tests:
+          - not_null
+  - name: stg_coinbase__order_book_levels
     columns:
       - name: run_id
         data_tests:
@@ -18,5 +32,30 @@ models:
         data_tests:
           - not_null
       - name: quantity
+        data_tests:
+          - not_null
+  - name: stg_bitstamp__order_book_levels
+    columns:
+      - name: run_id
+        data_tests:
+          - not_null
+      - name: side
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['bid', 'ask']
+      - name: price
+        data_tests:
+          - not_null
+      - name: quantity
+        data_tests:
+          - not_null
+  - name: stg_mempool__fee_rates
+    columns:
+      - name: run_id
+        data_tests:
+          - not_null
+          - unique
+      - name: half_hour_fee_rate
         data_tests:
           - not_null

@@ -11,10 +11,10 @@ levels as (
         source.record:fetched_at::timestamp_tz as fetched_at,
         'kraken' as exchange_code,
         'XXBTZEUR' as trading_pair_code,
-        iff(book_side.key = 'bids', 'bid', 'ask') as side,
+        book_side.key as side,
         level.index + 1 as level_rank,
-        level.value[0]::number(38, 8) as price,
-        level.value[1]::number(38, 8) as quantity
+        level.value[0]::number(18, 8) as price,
+        level.value[1]::number(18, 8) as quantity
     from source,
         lateral flatten(input => source.record:payload:result:XXBTZEUR) as book_side,
         lateral flatten(input => book_side.value) as level
