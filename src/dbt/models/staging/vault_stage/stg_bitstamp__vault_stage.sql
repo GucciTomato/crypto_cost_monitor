@@ -12,7 +12,7 @@ hashed_columns:
     hk_market:
         - exchange_code
         - trading_pair_code
-    hd_market_bistamp:
+    hd_market_bitstamp:
         is_hashdiff: true
         columns:
             - price 

@@ -3,7 +3,7 @@
 {%- set yaml_metadata -%}
 source_model: stg_coinbase__order_book_levels
 ldts: 'fetched_at'
-rsrc: '!bitstamp_api'
+rsrc: '!coinbase_api'
 hashed_columns:
     hk_exchange:
         - exchange_code
@@ -12,7 +12,7 @@ hashed_columns:
     hk_market:
         - exchange_code
         - trading_pair_code
-    hd_market_bistamp:
+    hd_market_coinbase:
         is_hashdiff: true
         columns:
             - price 
