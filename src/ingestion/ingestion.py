@@ -26,6 +26,7 @@ def fetch_url(url):
     response.raise_for_status()
     return response.json()
 
+
 def kraken_error(payload):
     if payload.get("error"):
         raise ValueError(f"Kraken API error: {payload['error']}")
@@ -37,42 +38,47 @@ def trim_order_book(payload):
     payload["asks"] = payload["asks"][:depth]
     return payload
 
-def write_record(key, record):
+
+def write_to_s3(key, record):
     body = json.dumps(record)
-    if BUCKET:
-        boto3.client("s3").put_object(Bucket=BUCKET, Key=key, Body=body)
-    else:
-        path = Path("data/raw") / key
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(body)
+    boto3.client("s3").put_object(Bucket=BUCKET, Key=key, Body=body)
+
+
+def write_to_local(key, record):
+    body = json.dumps(record)
+    path = Path("data/raw") / key
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(body)
 
 
 def lambda_handler(event, context):
-    main()
+    main(writer=write_to_s3, fetcher = fetch_url, SOURCES = SOURCES)
 
-def main():
+
+def main(writer, fetcher, SOURCES):
     run_id = str(uuid.uuid4()) # generating unique identifier for each run
     fetched_at = datetime.now(timezone.utc)
     failures = []
 
     for source, url in SOURCES.items():
         try: 
-            payload = fetch_url(url)
+            payload = fetcher(url)
             if source == "kraken":
                 kraken_error(payload)
             if source in ("coinbase", "bitstamp"):
                 payload = trim_order_book(payload)
             record = {"run_id": run_id, "source": source, "fetched_at": fetched_at.isoformat(),"payload": payload,}
             key = f"{source}/{fetched_at.strftime('%Y-%m-%d')}/{run_id}.json"
-            write_record(key, record)
+            writer(key, record)
             logger.info(f"Wrote raw data successfully for {source}")
         except Exception as e:
             failures.append(source)
             logger.exception(f"Ingestion failed: {e}")
-        
+
 
     if failures:
         raise RuntimeError(f"Ingestion failed for: {', '.join(failures)}")
 
+
 if __name__  == "__main__":
-    main()
+    main(writer = write_to_local, fetcher = fetch_url, SOURCES = SOURCES)
