@@ -1,0 +1,4 @@
+exchange_code,taker_fee_pct,valid_from
+coinbase,0.5,2026-11-08
+kraken,0.8,2026-11-08
+bitstamp,0.4,2026-11-08
