@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  # hubs
+  - name: hub_exchange
+    columns:
+      - name: hk_exchange
+        data_tests:
+          - unique
+          - not_null
+      - name: exchange_code
+        data_tests:
+          - unique
+          - not_null
+  - name: hub_trading_pair
+    columns:
+      - name: hk_trading_pair
+        data_tests:
+          - unique
+          - not_null
+      - name: trading_pair_code
+        data_tests:
+          - unique
+          - not_null
+  - name: hub_network
+    columns:
+      - name: hk_network
+        data_tests:
+          - unique
+          - not_null
+      - name: network_code
+        data_tests:
+          - unique
+          - not_null
+
+  # link
+  - name: link_market
+    columns:
+      - name: hk_market
+        data_tests:
+          - unique
+          - not_null
+      - name: hk_exchange
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('hub_exchange')
+                field: hk_exchange
+      - name: hk_trading_pair
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('hub_trading_pair')
+                field: hk_trading_pair
+
+  # satellites
+  - name: ma_sat_market_bitstamp
+    columns:
+      - name: hk_market
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('link_market')
+                field: hk_market
+      - name: ldts
+        data_tests:
+          - not_null
+  - name: ma_sat_market_coinbase
+    columns:
+      - name: hk_market
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('link_market')
+                field: hk_market
+      - name: ldts
+        data_tests:
+          - not_null
+  - name: ma_sat_market_kraken
+    columns:
+      - name: hk_market
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('link_market')
+                field: hk_market
+      - name: ldts
+        data_tests:
+          - not_null
+  - name: sat_network_fees
+    columns:
+      - name: hk_network
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('hub_network')
+                field: hk_network
+      - name: ldts
+        data_tests:
+          - not_null
+  - name: sat_exchange_fees
+    columns:
+      - name: hk_exchange
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('hub_exchange')
+                field: hk_exchange
+      - name: ldts
+        data_tests:
+          - not_null
