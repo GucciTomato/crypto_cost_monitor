@@ -21,41 +21,41 @@ SOURCES = {
     "mempool": "https://mempool.space/api/v1/fees/recommended",
 }
 
-def fetch_url(url):
+def fetch_url(url: str) -> dict:
     response = requests.get(url, timeout=10, headers={"User-Agent": "crypto-cost-monitor/0.1"})
     response.raise_for_status()
     return response.json()
 
 
-def kraken_error(payload):
+def kraken_error(payload) -> None:
     if payload.get("error"):
         raise ValueError(f"Kraken API error: {payload['error']}")
 
 
 depth = 50
-def trim_order_book(payload):
+def trim_order_book(payload: dict) -> dict:
     payload["bids"] = payload["bids"][:depth]
     payload["asks"] = payload["asks"][:depth]
     return payload
 
 
-def write_to_s3(key, record):
+def write_to_s3(key, record) -> None:
     body = json.dumps(record)
     boto3.client("s3").put_object(Bucket=BUCKET, Key=key, Body=body)
 
 
-def write_to_local(key, record):
+def write_to_local(key, record) -> None:
     body = json.dumps(record)
     path = Path("data/raw") / key
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(body)
 
 
-def lambda_handler(event, context):
+def lambda_handler(event, context) -> None:
     main(writer=write_to_s3, fetcher = fetch_url, SOURCES = SOURCES)
 
 
-def main(writer, fetcher, SOURCES):
+def main(writer, fetcher, SOURCES) -> None:
     run_id = str(uuid.uuid4()) # generating unique identifier for each run
     fetched_at = datetime.now(timezone.utc)
     failures = []
