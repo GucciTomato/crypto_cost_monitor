@@ -1,0 +1,78 @@
+version: 2
+
+models:
+  - name: bv_snapshot_runs
+    columns:
+      - name: snapshot_ts
+        data_tests:
+          - unique
+          - not_null
+  - name: bv_order_book_levels
+    columns:
+      - name: snapshot_ts
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('bv_snapshot_runs')
+                field: snapshot_ts
+      - name: exchange_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bitstamp', 'coinbase', 'kraken']
+      - name: side
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bids', 'asks']
+      - name: level_rank
+        data_tests:
+          - not_null
+      - name: price
+        data_tests:
+          - not_null
+      - name: quantity
+        data_tests:
+          - not_null
+      - name: cumulative_quantity
+        data_tests:
+          - not_null
+      - name: cumulative_value_eur
+        data_tests:
+          - not_null
+  - name: bv_run_fees
+    columns:
+      - name: snapshot_ts
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('bv_snapshot_runs')
+                field: snapshot_ts
+      - name: exchange_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bitstamp', 'coinbase', 'kraken']
+      - name: taker_fee_pct
+        data_tests:
+          - not_null
+      - name: fastest_fee_rate
+        data_tests:
+          - not_null
+      - name: half_hour_fee_rate
+        data_tests:
+          - not_null
+      - name: hour_fee_rate
+        data_tests:
+          - not_null
+      - name: economy_fee_rate
+        data_tests:
+          - not_null
+      - name: minimum_fee_rate
+        data_tests:
+          - not_null

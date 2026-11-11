@@ -2,6 +2,17 @@
 version: 2
 
 models:
+  - name: stg_mempool__fee_rates
+    columns:
+      - name: run_id
+        data_tests:
+          - not_null
+          - unique
+      - name: half_hour_fee_rate
+        data_tests:
+          - not_null
+
+# order book levels
   - name: stg_kraken__order_book_levels
     columns:
       - name: run_id
@@ -50,12 +61,90 @@ models:
       - name: quantity
         data_tests:
           - not_null
-  - name: stg_mempool__fee_rates
+
+# vault stage
+  - name: stg_bitstamp__vault_stage
     columns:
-      - name: run_id
+      - name: hk_exchange
         data_tests:
           - not_null
-          - unique
-      - name: half_hour_fee_rate
+      - name: hk_trading_pair
+        data_tests:
+          - not_null
+      - name: hk_market
+        data_tests:
+          - not_null
+      - name: hd_market_bitstamp
+        data_tests:
+          - not_null
+      - name: ldts
+        data_tests:
+          - not_null
+  - name: stg_coinbase__vault_stage
+    columns:
+      - name: hk_exchange
+        data_tests:
+          - not_null
+      - name: hk_trading_pair
+        data_tests:
+          - not_null
+      - name: hk_market
+        data_tests:
+          - not_null
+      - name: hd_market_coinbase
+        data_tests:
+          - not_null
+      - name: ldts
+        data_tests:
+          - not_null
+      - name: rsrc
+        data_tests:
+          - not_null
+  - name: stg_kraken__vault_stage
+    columns:
+      - name: hk_exchange
+        data_tests:
+          - not_null
+      - name: hk_trading_pair
+        data_tests:
+          - not_null
+      - name: hk_market
+        data_tests:
+          - not_null
+      - name: hd_market_kraken
+        data_tests:
+          - not_null
+      - name: ldts
+        data_tests:
+          - not_null
+      - name: rsrc
+        data_tests:
+          - not_null
+  - name: stg_mempool__vault_stage
+    columns:
+      - name: hk_network
+        data_tests:
+          - not_null
+      - name: hd_fee_rates
+        data_tests:
+          - not_null
+      - name: ldts
+        data_tests:
+          - not_null
+      - name: rsrc
+        data_tests:
+          - not_null
+  - name: stg_exchange_fees__vault_stage
+    columns:
+      - name: hk_exchange
+        data_tests:
+          - not_null
+      - name: hd_exchange_fees
+        data_tests:
+          - not_null
+      - name: ldts
+        data_tests:
+          - not_null
+      - name: rsrc
         data_tests:
           - not_null
