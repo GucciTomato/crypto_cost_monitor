@@ -28,3 +28,6 @@ target/
 dbt_packages/
 logs/
 .env
+
+# superset
+Snowflake.yaml
