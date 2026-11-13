@@ -1,11 +1,12 @@
 import json
-import requests
-import uuid
-from datetime import datetime, timezone
-from pathlib import Path
 import logging
 import os
+import uuid
+from datetime import UTC, datetime
+from pathlib import Path
+
 import boto3
+import requests
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -62,7 +63,7 @@ def lambda_handler(event, context) -> None:
 
 def main(writer, fetcher, SOURCES) -> None:
     run_id = str(uuid.uuid4())  # generating unique identifier for each run
-    fetched_at = datetime.now(timezone.utc)
+    fetched_at = datetime.now(UTC)
     failures = []
 
     for source, url in SOURCES.items():

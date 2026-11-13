@@ -1,10 +1,12 @@
+import json
+from copy import deepcopy
+from functools import partial
+from pathlib import Path
+
 import pytest
+
 import src.ingestion.ingestion
 from src.ingestion.ingestion import main, trim_order_book
-from copy import deepcopy
-from pathlib import Path
-import json
-from functools import partial
 
 
 def test_trim_order_book():
