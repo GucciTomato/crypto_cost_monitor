@@ -21,8 +21,11 @@ SOURCES = {
     "mempool": "https://mempool.space/api/v1/fees/recommended",
 }
 
+
 def fetch_url(url: str) -> dict:
-    response = requests.get(url, timeout=10, headers={"User-Agent": "crypto-cost-monitor/0.1"})
+    response = requests.get(
+        url, timeout=10, headers={"User-Agent": "crypto-cost-monitor/0.1"}
+    )
     response.raise_for_status()
     return response.json()
 
@@ -33,6 +36,8 @@ def kraken_error(payload) -> None:
 
 
 depth = 50
+
+
 def trim_order_book(payload: dict) -> dict:
     payload["bids"] = payload["bids"][:depth]
     payload["asks"] = payload["asks"][:depth]
@@ -52,22 +57,27 @@ def write_to_local(key, record) -> None:
 
 
 def lambda_handler(event, context) -> None:
-    main(writer=write_to_s3, fetcher = fetch_url, SOURCES = SOURCES)
+    main(writer=write_to_s3, fetcher=fetch_url, SOURCES=SOURCES)
 
 
 def main(writer, fetcher, SOURCES) -> None:
-    run_id = str(uuid.uuid4()) # generating unique identifier for each run
+    run_id = str(uuid.uuid4())  # generating unique identifier for each run
     fetched_at = datetime.now(timezone.utc)
     failures = []
 
     for source, url in SOURCES.items():
-        try: 
+        try:
             payload = fetcher(url)
             if source == "kraken":
                 kraken_error(payload)
             if source in ("coinbase", "bitstamp"):
                 payload = trim_order_book(payload)
-            record = {"run_id": run_id, "source": source, "fetched_at": fetched_at.isoformat(),"payload": payload,}
+            record = {
+                "run_id": run_id,
+                "source": source,
+                "fetched_at": fetched_at.isoformat(),
+                "payload": payload,
+            }
             key = f"{source}/{fetched_at.strftime('%Y-%m-%d')}/{run_id}.json"
             writer(key, record)
             logger.info(f"Wrote raw data successfully for {source}")
@@ -75,10 +85,9 @@ def main(writer, fetcher, SOURCES) -> None:
             failures.append(source)
             logger.exception(f"Ingestion failed: {e}")
 
-
     if failures:
         raise RuntimeError(f"Ingestion failed for: {', '.join(failures)}")
 
 
-if __name__  == "__main__":
-    main(writer = write_to_local, fetcher = fetch_url, SOURCES = SOURCES)
+if __name__ == "__main__":
+    main(writer=write_to_local, fetcher=fetch_url, SOURCES=SOURCES)

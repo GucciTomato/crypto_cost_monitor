@@ -9,6 +9,8 @@ dependencies = [
     "dbt-snowflake>=1.12,<1.13",
     "pytest",
     "boto3",
+    "flask",
+    "ruff",
 ]
 license = "MIT"
 license-files = ["LICENSE"]
