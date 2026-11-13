@@ -1,0 +1,46 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs: 
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Lint and format check
+        run: |
+          ruff check .
+          ruff format --check .
+
+      - name: Run tests
+        run: pytest
+
+      - name: Set up Terraform (as not pre-installed)
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Check Terraform
+        working-directory: terraform
+        run: |
+          terraform fmt -check
+          terraform init -backend=false
+          terraform validate
+
+      - name: Check dbt project
+        working-directory: src/dbt
+        env:
+          SNOWFLAKE_ACCOUNT: sample_placeholder
+          SNOWFLAKE_PRIVATE_KEY_PATH: sample_placeholder
+        run: |
+          dbt deps
+          dbt parse
