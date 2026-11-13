@@ -1,0 +1,175 @@
+table_name: mart_btc_purchase_costs
+main_dttm_col: SNAPSHOT_TS
+currency_code_column: null
+description: null
+default_endpoint: null
+offset: 0
+cache_timeout: null
+catalog: crypto_cost_monitor
+schema: dev_marts
+sql: null
+params: null
+template_params: null
+filter_select_enabled: true
+fetch_values_predicate: null
+extra: null
+normalize_columns: false
+always_filter_main_dttm: false
+folders: null
+uuid: 56e811c4-6aba-4e45-8694-0667537cf683
+metrics:
+- metric_name: count
+  verbose_name: COUNT(*)
+  metric_type: count
+  expression: COUNT(*)
+  description: null
+  d3format: null
+  currency: null
+  extra: null
+  warning_text: null
+columns:
+- column_name: AMOUNT_EUR
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: DECIMAL(4, 0)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: MID_PRICE
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: DECIMAL(25, 8)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: EXECUTION_COST_EUR
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: DECIMAL(38, 4)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: NETWORK_FEE_EUR
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: DECIMAL(38, 4)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: EXCHANGE_CODE
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR(9)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: FEE_TYPE
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: VARCHAR(9)
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: TOTAL_COST_PCT
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: TOTAL_COST_EUR
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: TRADING_FEE_EUR
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: FLOAT
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: SNAPSHOT_TS
+  verbose_name: null
+  is_dttm: true
+  is_active: true
+  type: TIMESTAMP_TZ
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+- column_name: IS_DEPTH_SUFFICIENT
+  verbose_name: null
+  is_dttm: false
+  is_active: true
+  type: BOOLEAN
+  advanced_data_type: null
+  groupby: true
+  filterable: true
+  expression: null
+  description: null
+  python_date_format: null
+  datetime_format: null
+  extra: null
+version: 1.0.0
+database_uuid: f66e0c10-3d2b-41de-a754-dc41b8270fed

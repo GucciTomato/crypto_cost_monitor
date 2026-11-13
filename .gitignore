@@ -12,6 +12,12 @@ venv/
 __pycache__/
 *.pyc
 
+# pytest
+.pytest_cache/
+
+# ruff
+.ruff_cache/
+
 # terraform
 *.tfstate*
 .terraform
@@ -27,4 +33,6 @@ lambda.zip
 target/
 dbt_packages/
 logs/
-.env
+
+# superset
+Snowflake.yaml
