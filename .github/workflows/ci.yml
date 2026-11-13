@@ -30,7 +30,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
 
       - name: Check Terraform
-        working-directory: terraform
+        working-directory: infra/terraform
         run: |
           terraform fmt -check
           terraform init -backend=false
