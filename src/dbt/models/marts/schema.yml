@@ -1,0 +1,76 @@
+version: 2
+
+models:
+  - name: mart_btc_purchase_costs
+    columns:
+      - name: snapshot_ts
+        data_tests:
+          - not_null
+      - name: exchange_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bitstamp', 'coinbase', 'kraken']
+      - name: amount_eur
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [10, 50, 100, 500, 1000, 5000]
+                quote: false
+      - name: fee_type
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['fastest', 'half_hour', 'hour', 'economy', 'minimum']
+      - name: mid_price
+        data_tests:
+          - not_null
+      - name: is_depth_sufficient
+        data_tests:
+          - not_null
+      - name: total_cost_eur
+        data_tests:
+          - not_null:
+              config:
+                where: "is_depth_sufficient"
+  - name: mart_order_book_api
+    columns:
+      - name: snapshot_ts
+        data_tests:
+          - not_null
+      - name: exchange_code
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bitstamp', 'coinbase', 'kraken']
+      - name: side
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['bids', 'asks']
+      - name: level_rank
+        data_tests:
+          - not_null
+      - name: price
+        data_tests:
+          - not_null
+      - name: cumulative_value_eur
+        data_tests:
+          - not_null
+      - name: prev_cumulative_value_eur
+        data_tests:
+          - not_null
+      - name: mid_price
+        data_tests:
+          - not_null
+      - name: taker_fee_pct
+        data_tests:
+          - not_null
+      - name: half_hour_fee_rate
+        data_tests:
+          - not_null
