@@ -40,7 +40,10 @@ def _clean(value):
 def _query(sql, params=None):
     with get_connection() as conn, conn.cursor(snowflake.connector.DictCursor) as cur:
         cur.execute(sql, params)
-        return [{key.lower(): _clean(value) for key, value in row.items()} for row in cur.fetchall()]
+        return [
+            {key.lower(): _clean(value) for key, value in row.items()}
+            for row in cur.fetchall()
+        ]
 
 
 def get_latest_mid_prices():
@@ -71,7 +74,9 @@ def get_purchase_costs(amount, fee_type, exchange=None, at=None):
                 m.mid_price,
                 m.taker_fee_pct,
                 m.{fee_column} as fee_rate,
-                m.prev_cumulative_quantity + (%(amount)s - m.prev_cumulative_value_eur) / m.price as btc_received
+                m.prev_cumulative_quantity 
+                    + (%(amount)s - m.prev_cumulative_value_eur) / m.price
+                    as btc_received
             from mart_order_book_api as m
             inner join run on m.snapshot_ts = run.snapshot_ts
             where m.side = 'asks'

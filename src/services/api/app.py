@@ -32,11 +32,15 @@ def purchase_costs():
 
     fee_type = request.args.get("fee_type", "half_hour")
     if fee_type not in FEE_COLUMNS:
-        return {"error": f"parameter 'fee_type' must be one of {sorted(FEE_COLUMNS)}"}, 400
+        return {
+            "error": f"parameter 'fee_type' must be one of {sorted(FEE_COLUMNS)}"
+        }, 400
 
     exchange = request.args.get("exchange")
     if exchange is not None and exchange not in EXCHANGES:
-        return {"error": f"parameter 'exchange' must be one of {sorted(EXCHANGES)}"}, 400
+        return {
+            "error": f"parameter 'exchange' must be one of {sorted(EXCHANGES)}"
+        }, 400
 
     at = request.args.get("at")
     if at is not None:

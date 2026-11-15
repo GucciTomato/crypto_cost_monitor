@@ -1,6 +1,6 @@
 data "archive_file" "lambda" {
   type        = "zip"
-  source_dir  = "${path.module}/../build" # build for ingestion script and non standard library: requests 
+  source_dir  = "${path.module}/../../build" # build for ingestion script and non standard library: requests 
   output_path = "${path.module}/lambda.zip"
 }
 
