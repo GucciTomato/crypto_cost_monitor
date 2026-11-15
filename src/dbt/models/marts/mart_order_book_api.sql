@@ -1,4 +1,4 @@
-{{ config(materialized='view') }}
+{{ config(materialized='view', grants={'select': ['api']}) }}
 
 select
     obl.snapshot_ts,

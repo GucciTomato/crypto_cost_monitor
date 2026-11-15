@@ -10,7 +10,7 @@ dependencies = [
     "pytest",
     "boto3",
     "flask",
-    "ruff",
+    "ruff==0.15.21",
 ]
 license = "MIT"
 license-files = ["LICENSE"]
