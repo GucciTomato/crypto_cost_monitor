@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from decimal import Decimal
+
 import snowflake.connector
 
 # fee type in the API -> column in the mart

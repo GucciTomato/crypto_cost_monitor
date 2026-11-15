@@ -1,6 +1,12 @@
 from datetime import datetime
+
+from data_services import (
+    EXCHANGES,
+    FEE_COLUMNS,
+    get_latest_mid_prices,
+    get_purchase_costs,
+)
 from flask import Flask, jsonify, request
-from data_services import EXCHANGES, FEE_COLUMNS, get_latest_mid_prices, get_purchase_costs
 
 app = Flask(__name__)
 

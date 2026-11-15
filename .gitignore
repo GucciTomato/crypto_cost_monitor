@@ -33,6 +33,3 @@ lambda.zip
 target/
 dbt_packages/
 logs/
-
-# superset
-Snowflake.yaml
